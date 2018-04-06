@@ -4,4 +4,6 @@ This is just a demonstration of how you can embed a full running Atlas server in
 
 For demonstration alone, it contains a [simulation](https://github.com/jkschneider/atlas-embedded/blob/master/src/main/java/io/pivotal/atlas/SimulatedRestEndpointCalls.java) of semi-frequent outbound HTTP client requests.
 
+![Example](https://github.com/jkschneider/atlas-embedded/raw/master/screenshot.png)
+
 Enjoy!
