@@ -1,0 +1,2 @@
+management.metrics.export.atlas.step: 10s
+management.metrics.distribution.percentiles-histogram.http.client.requests: true

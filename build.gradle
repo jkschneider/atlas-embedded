@@ -1,0 +1,39 @@
+buildscript {
+	ext {
+		springBootVersion = '2.0.1.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+repositories {
+    mavenCentral()
+
+	// this is where the atlas modules come from
+	maven { url 'https://dl.bintray.com/netflixoss/maven/' }
+}
+
+dependencies {
+	compile 'org.springframework.boot:spring-boot-starter-webflux'
+	compile 'org.springframework.boot:spring-boot-starter-actuator'
+
+	compile 'io.micrometer:micrometer-registry-atlas'
+
+    compile 'org.slf4j:slf4j-api'
+    compile 'org.slf4j:log4j-over-slf4j' // bridges logging in atlas
+
+    compile 'com.netflix.atlas_v1:atlas-module-akka_2.12:1.6.0-rc.8'
+    compile 'com.netflix.atlas_v1:atlas-module-lwcapi_2.12:1.6.0-rc.8'
+    compile 'com.netflix.atlas_v1:atlas-module-webapi_2.12:1.6.0-rc.8'
+
+	// just for SimulatedRestEndpointCalls -- not necessary for real app
+	compile 'colt:colt:1.2.0'
+}
