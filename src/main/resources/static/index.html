@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><title>Metrics Dashboard</title></head>
+<style>
+    td { vertical-align: top }
+</style>
+<body>
+    <h1>Outbound Request Metrics Dashboard</h1>
+
+    <table>
+        <tr><td colspan="2"><h2>Average and max latency of all requests</h2></td></tr>
+        <tr>
+            <td><img alt="Average and max" src="http://localhost:7101/api/v1/graph?q=name,http.client.requests,:eq,:dup,:dist-avg,average,:legend,:swap,:dist-max,max,:legend&s=e-10m&l=0&title=Average+and+max"/></td>
+            <td><img alt="Throughput" src="http://localhost:7101/api/v1/graph?q=name,http.client.requests,:eq,throughput,:legend&s=e-10m&l=0&title=Throughput"/></td>
+        </tr>
+    </table>
+
+    <table>
+        <tr><td colspan="2"><h2>Per client</h2></td></tr>
+        <tr>
+            <td><img alt="Average and max" src="http://localhost:7101/api/v1/graph?q=name,http.client.requests,:eq,:dist-max,(,client,),:by&s=e-10m&l=0&title=Per+client+latency"/></td>
+            <td><img alt="Throughput" src="http://localhost:7101/api/v1/graph?q=name,http.client.requests,:eq,(,client,),:by,:stack&s=e-10m&l=0&title=Throughput+per+client"/></td>
+        </tr>
+    </table>
+
+    <table>
+        <tr><td colspan="2"><h2>Status</h2></td></tr>
+        <tr>
+            <td><img alt="Success" src="http://localhost:7101/api/v1/graph?q=name,http.client.requests,:eq,response,200,:eq,:and,(,client,),:by,:stack&s=e-10m&l=0&title=Success&palette=greens"/></td>
+            <td><img alt="Failure" src="http://localhost:7101/api/v1/graph?q=name,http.client.requests,:eq,response,400,:eq,:and,(,client,),:by,:stack&s=e-10m&l=0&title=Failure&palette=reds"/></td>
+        </tr>
+    </table>
+</body>
+</html>
