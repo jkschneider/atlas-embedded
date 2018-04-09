@@ -1,6 +1,6 @@
 package io.pivotal.atlas;
 
-import java.io.File;
+import java.io.InputStreamReader;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -23,6 +23,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AtlasConfiguration {
 	private Logger logger = LoggerFactory.getLogger(AtlasConfiguration.class);
+
 	private GuiceHelper guice = new GuiceHelper();
 
 	/**
@@ -32,7 +33,8 @@ public class AtlasConfiguration {
 	public void startAtlas() {
 		try {
 			// Start an embedded Atlas server at a port governed by the provided Atlas config, or 7101 by default
-			loadAdditionalConfigFiles("memory.conf");
+			Config c = ConfigFactory.parseReader(new InputStreamReader(getClass().getResourceAsStream("/memory.conf")));
+			ConfigManager.update(c);
 
 			List<Module> modules = GuiceHelper.getModulesUsingServiceLoader();
 
@@ -53,17 +55,6 @@ public class AtlasConfiguration {
 		}
 		catch (Throwable t) {
 			logger.error("server failed to start, shutting down", t);
-		}
-	}
-
-	private void loadAdditionalConfigFiles(String... files) {
-		for (String path : files) {
-			logger.info("loading config file: {}", path);
-			File file = new File(path);
-			Config c = file.exists() ?
-					ConfigFactory.parseFileAnySyntax(file) :
-					ConfigFactory.parseResourcesAnySyntax(path);
-			ConfigManager.update(c);
 		}
 	}
 
